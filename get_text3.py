@@ -10,10 +10,10 @@ ruta_imagen = 'processed_photos/enhanced_image.png'
 imagen = cv2.imread(ruta_imagen)
 
 #(X,Y, Ancho, Alto)
-roi_datos = (105, 0, 410, 100)
-roi_numero = (260, 110, 220, 50)  
-roi_nombre = (250, 335, 250, 33)  
-roi_apellido = (340, 440, 300, 110)
+roi_datos = (170, 0, 750, 160)
+roi_numero = (455, 185, 365, 70)  
+roi_nombre = (430, 625, 445, 60)  
+roi_apellido = (430, 680, 300, 100)
 
 datos_recortado = imagen[roi_datos[1]:roi_datos[1]+roi_datos[3], roi_datos[0]:roi_datos[0]+roi_datos[2]]
 

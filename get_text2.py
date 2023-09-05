@@ -39,7 +39,7 @@ if len(tools) == 0:
 tool = tools[0]
 
 # Ruta completa de la imagen
-ruta_imagen = 'processed_photos/enhanced_image_test.jpg'
+ruta_imagen = 'processed_photos\enhanced_image.png'
 
 # Cargar la imagen con OpenCV
 imagen = cv2.imread(ruta_imagen)
