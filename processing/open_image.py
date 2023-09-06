@@ -48,7 +48,7 @@ class ImageEnhancer:
         if self.image is not None:
             self.image = cv2.GaussianBlur(self.image, (3, 3), 0)
 
-    def save_enhanced_image(self, file_name="enhanced_image.jpg"):
+    def save_enhanced_image(self, file_name="enhanced_image.png"):
         if self.image is not None:
             output_folder = "processed_photos"
 
@@ -77,6 +77,7 @@ class ImageEnhancer:
             self.apply_sharpening_filter()
             self.adjust_gamma()
             self.smooth()
+            
             self.save_enhanced_image()
 
     def display_concatenated_image(self, enhanced_image):

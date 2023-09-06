@@ -1,7 +1,7 @@
 from processing.open_image import *
 
 if __name__ == "__main__":
-    path = "photo/image.jpg"
+    path = "photo/image.jpeg"
     image = ImageEnhancer(path)
     image.process()
     image.display_image()
