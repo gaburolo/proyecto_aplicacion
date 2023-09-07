@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-import generator_names as gn
+import generator_data as gn
 
 
 def create_image(index):
@@ -48,7 +48,7 @@ def create_image(index):
     for (x, y), texto in coordenadas_numero:
         draw.text((x, y), texto, fill=color_texto, font=fuente_numero)
     # Guarda la imagen con las frases escritas
-    imagen_guardada = "salida/CR"+str(index)+".png"
+    imagen_guardada = "salida/cedula/CR"+str(index)+".png"
     imagen.save(imagen_guardada)
 
     # Cierra la imagen

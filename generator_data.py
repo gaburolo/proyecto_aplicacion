@@ -86,5 +86,65 @@ def generar_numero():
         numero += grupo + ' '  # Agrega el grupo de cuatro dígitos y un espacio
     return numero.strip() 
 
-numero_generado = generar_numero()
-print(numero_generado)
+def generar_numero_con_año():
+    año = random.randint(2000, 2023)
+    numero = str(año) + ''.join(str(random.randint(0, 9)) for _ in range(6))
+    return numero
+
+
+def generar_numero_con_tipo():
+    tipo = random.choice(["DM", "CI"])  # Elige aleatoriamente "DM" o "CI"
+    numero = tipo + '-' + ''.join(str(random.randint(0, 9)) for _ in range(9))
+    return numero
+
+def generar_fecha():
+    mes = random.randint(1, 12)  # Genera un mes aleatorio (1-12)
+    año = random.randint(2024, 2030)  # Genera un año aleatorio (2024-2030)
+    fecha = f"{mes}/{año}"
+    return fecha
+
+def generar_texto_tipo():
+    opciones = ["A1", "A2", "A3", "B1", "B2", "B3", "B4", "C1", "C2", "D1", "D2", "D3", "E1", "E2"]
+    texto_aleatorio = random.choice(opciones)
+    return texto_aleatorio
+
+
+def generar_fechas():
+    # Genera la fecha de nacimiento entre 1930 y 2004
+    año_nacimiento = random.randint(1930, 2004)
+    mes_nacimiento = random.randint(1, 12)
+    dia_nacimiento = random.randint(1, 28)  # Se asume 28 para simplificar (ajusta según tus necesidades)
+    fecha_nacimiento = f"{dia_nacimiento}-{mes_nacimiento}-{año_nacimiento}"
+
+    # Genera la fecha de expediente 18-25 años después de la fecha de nacimiento
+    años_despues = random.randint(18, 25)
+    año_expediente = año_nacimiento + años_despues
+    mes_expediente = random.randint(1, 12)
+    dia_expediente = random.randint(1, 28)  # Se asume 28 para simplificar (ajusta según tus necesidades)
+    fecha_expediente = f"{dia_expediente}-{mes_expediente}-{año_expediente}"
+
+    # Genera la fecha de vencimiento entre 2024 y 2030
+    año_vencimiento = random.randint(2024, 2030)
+    mes_vencimiento = random.randint(1, 12)
+    dia_vencimiento = random.randint(1, 28)  # Se asume 28 para simplificar (ajusta según tus necesidades)
+    fecha_vencimiento = f"{dia_vencimiento}-{mes_vencimiento}-{año_vencimiento}"
+
+    return {
+        "Nacimiento": fecha_nacimiento,
+        "Expediente": fecha_expediente,
+        "Vencimiento": fecha_vencimiento
+    }
+
+def generar_codigos():
+    codigo1 = ''.join(str(random.randint(0, 9)) for _ in range(8))
+
+    numeros_primeros = ''.join(str(random.randint(0, 9)) for _ in range(8))
+    numeros_ultimos = ''.join(str(random.randint(0, 9)) for _ in range(2))
+    codigo2 = numeros_primeros + ' ' + numeros_ultimos
+    
+    return codigo1, codigo2 
+
+def generar_tipo_sangre():
+    tipos_sangre = ["A+", "NL", "RHA+", "RHO+", "O+"]
+    tipo_sangre_seleccionado = random.choice(tipos_sangre)
+    return tipo_sangre_seleccionado
