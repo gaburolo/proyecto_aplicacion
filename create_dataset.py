@@ -4,7 +4,7 @@ import create_data_license as cdl
 
 if __name__ == "__main__":
     i = 0
-    while(i<51):
+    while(i<501):
 
         cdi.create_image(i)
         cds.create_image(i)
