@@ -43,16 +43,3 @@ def categorizar_local(url):
   elif value == 2:
     return "licencia"
   
-#0 = carnet, 1 = cedula, 2 = licencia
-url = "processed_photos\enhanced_image.png"
-prediccion = categorizar_local(url)
-print(prediccion)
-
-#0 = carnet, 1 = cedula, 2 = licencia
-url = "salida\carnet\TEC0.png"
-prediccion = categorizar_local(url)
-print(prediccion)
-
-url = "https://cloudfront-us-east-1.images.arcpublishing.com/gruponacion/LXELPE5IQFCL7BKCHFVVI7QZ6A.jpeg"
-prediccion = categorizar(url)
-print(prediccion)

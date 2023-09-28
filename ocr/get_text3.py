@@ -4,8 +4,6 @@ import os
 import numpy as np
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
-
-
 def get_text_img(ruta_imagen):
     imagen = cv2.imread(ruta_imagen)
 
@@ -28,24 +26,55 @@ def get_text_img(ruta_imagen):
     texto_datos = pytesseract.image_to_string(datos_recortado, lang='spa')
 
 
-    print("Texto en la región del nombre:")
-    print(texto_nombre)
-    print("Texto en la región del apellido:")
-    print(texto_apellido)
-    print("\nTexto en la región del número de identificación:")
-    print(texto_numero)
-    print("Texto en la región del tipo:")
-    print(texto_datos)
+    #print("Texto en la región del nombre:")
+    #print(texto_nombre)
+    #print("Texto en la región del apellido:")
+    #print(texto_apellido)
+    #print("\nTexto en la región del número de identificación:")
+    #print(texto_numero)
+    #print("Texto en la región del tipo:")
+    #print(texto_datos)
 
 
+    lastname = texto_apellido.split("\n")
+    texto_nombre = texto_nombre.split("\n")
+    texto_numero = texto_numero.split("\n")
+    data = {
+        "name": texto_nombre[0],
+        "lastname1": lastname[0],
+        "lastname2": lastname[1],
+        "id": texto_numero[0]
+    }
+    return data
 
-"""
-carpeta_parts = 'parts'
-if not os.path.exists(carpeta_parts):
-    os.makedirs(carpeta_parts)
+def get_text_img_stundent(ruta_imagen):
+    imagen = cv2.imread(ruta_imagen)
 
-# Guardar las regiones recortadas en archivos individuales
-ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
+    #(X,Y, Ancho, Alto)
+    roi_datos = (1015, 724, 145, 55)
+    roi_numero = (370, 620, 382, 80)
+    roi_nombre = (380, 500, 855, 60)  
 
 
-cv2.imwrite(ruta_apellido_recortado, apellido_recortado)"""
+    datos_recortado = imagen[roi_datos[1]:roi_datos[1]+roi_datos[3], roi_datos[0]:roi_datos[0]+roi_datos[2]]
+
+    numero_recortado = imagen[roi_numero[1]:roi_numero[1]+roi_numero[3], roi_numero[0]:roi_numero[0]+roi_numero[2]]
+
+    nombre_recortado = imagen[roi_nombre[1]:roi_nombre[1]+roi_nombre[3], roi_nombre[0]:roi_nombre[0]+roi_nombre[2]]
+   
+    texto_nombre = pytesseract.image_to_string(nombre_recortado, lang='spa')
+    texto_numero = pytesseract.image_to_string(numero_recortado, lang='spa')
+    texto_datos = pytesseract.image_to_string(datos_recortado, lang='spa')
+   
+    text_name = texto_nombre.split("\n")
+    
+    texto_numero = texto_numero.split("\n")
+    texto_datos = texto_datos.split("\n")
+
+    data = {
+        "name": text_name[0],
+        "date": texto_datos[0],
+        "id": texto_numero[0]
+    }
+
+    return data
