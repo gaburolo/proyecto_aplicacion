@@ -1,0 +1,206 @@
+from pymongo import MongoClient
+from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+uri = os.getenv("uri")
+# Cadena de conexión a MongoDB Atlas
+
+# Conectar a la base de datos
+client = MongoClient(uri)
+db = client.get_database()
+
+# Seleccionar una colección
+collection = db["licencia"]
+
+# Datos a insertar
+datos = [
+    {
+        "Numero": "DM - 889330756",
+        "Expedicion": "17-07-2012",
+        "Nacimiento": "06-06-1984",
+        "Vencimiento": "08-05-2024",
+        "TipoSanger": "A+",
+        "Nombre": "Vargas S\u00e1nchez Isabel",
+        "Codigo": "740423645"
+    },
+    {
+        "Numero": "DM - 353027210",
+        "Expedicion": "18-02-2013",
+        "Nacimiento": "16-01-1997",
+        "Vencimiento": "05-06-2025",
+        "TipoSanger": "AB+",
+        "Nombre": "Herrera S\u00e1nchez Laura",
+        "Codigo": "492113142"
+    },
+    {
+        "Numero": "DM - 645936823",
+        "Expedicion": "18-06-2020",
+        "Nacimiento": "24-06-1966",
+        "Vencimiento": "10-04-2029",
+        "TipoSanger": "A-",
+        "Nombre": "Vargas Garc\u00eda Daniel",
+        "Codigo": "451082703"
+    },
+    {
+        "Numero": "DM - 320954109",
+        "Expedicion": "10-04-2002",
+        "Nacimiento": "24-06-1972",
+        "Vencimiento": "02-10-2029",
+        "TipoSanger": "AB+",
+        "Nombre": "Herrera Gonz\u00e1lez Javier",
+        "Codigo": "616067045"
+    },
+    {
+        "Numero": "DM - 114181500",
+        "Expedicion": "16-03-2005",
+        "Nacimiento": "20-10-1965",
+        "Vencimiento": "26-03-2027",
+        "TipoSanger": "B+",
+        "Nombre": "Garc\u00eda L\u00f3pez Miguel",
+        "Codigo": "444476202"
+    },
+    {
+        "Numero": "DM - 467494189",
+        "Expedicion": "10-05-2004",
+        "Nacimiento": "12-04-1992",
+        "Vencimiento": "03-09-2027",
+        "TipoSanger": "B-",
+        "Nombre": "Herrera Gonz\u00e1lez Carlos",
+        "Codigo": "611534789"
+    },
+    {
+        "Numero": "DM - 321988627",
+        "Expedicion": "04-02-2022",
+        "Nacimiento": "19-04-1974",
+        "Vencimiento": "20-11-2025",
+        "TipoSanger": "O+",
+        "Nombre": "S\u00e1nchez Garc\u00eda Mar\u00eda",
+        "Codigo": "520993412"
+    },
+    {
+        "Numero": "DM - 292644309",
+        "Expedicion": "13-12-2011",
+        "Nacimiento": "16-08-1956",
+        "Vencimiento": "25-01-2024",
+        "TipoSanger": "O+",
+        "Nombre": "Gonz\u00e1lez Vargas Silvia",
+        "Codigo": "955149820"
+    },
+    {
+        "Numero": "DM - 354827125",
+        "Expedicion": "28-01-2012",
+        "Nacimiento": "01-11-1984",
+        "Vencimiento": "18-12-2024",
+        "TipoSanger": "O+",
+        "Nombre": "Fuentes Vargas Carlos",
+        "Codigo": "987967059"
+    },
+    {
+        "Numero": "DM - 180050079",
+        "Expedicion": "22-10-2008",
+        "Nacimiento": "02-10-1996",
+        "Vencimiento": "16-09-2030",
+        "TipoSanger": "O-",
+        "Nombre": "L\u00f3pez Gonz\u00e1lez Carlos",
+        "Codigo": "154967530"
+    },
+    {
+        "Numero": "DM - 340216918",
+        "Expedicion": "15-03-2015",
+        "Nacimiento": "14-05-1987",
+        "Vencimiento": "25-02-2027",
+        "TipoSanger": "A+",
+        "Nombre": "Rojas Jim\u00e9nez Javier",
+        "Codigo": "721366083"
+    },
+    {
+        "Numero": "DM - 569996158",
+        "Expedicion": "15-10-2008",
+        "Nacimiento": "13-04-1978",
+        "Vencimiento": "15-03-2024",
+        "TipoSanger": "B-",
+        "Nombre": "Fuentes S\u00e1nchez Silvia",
+        "Codigo": "372314428"
+    },
+    {
+        "Numero": "DM - 110778353",
+        "Expedicion": "23-12-2004",
+        "Nacimiento": "03-04-1987",
+        "Vencimiento": "14-06-2028",
+        "TipoSanger": "B+",
+        "Nombre": "Gonz\u00e1lez S\u00e1nchez Daniel",
+        "Codigo": "868565671"
+    },
+    {
+        "Numero": "DM - 743999277",
+        "Expedicion": "19-06-2003",
+        "Nacimiento": "27-11-1985",
+        "Vencimiento": "28-08-2029",
+        "TipoSanger": "B+",
+        "Nombre": "Fuentes Gonz\u00e1lez Mar\u00eda",
+        "Codigo": "476492439"
+    },
+    {
+        "Numero": "DM - 757214824",
+        "Expedicion": "03-08-2015",
+        "Nacimiento": "19-07-1985",
+        "Vencimiento": "09-09-2025",
+        "TipoSanger": "AB-",
+        "Nombre": "Morales Garc\u00eda Carlos",
+        "Codigo": "987687644"
+    },
+    {
+        "Numero": "DM - 145718412",
+        "Expedicion": "24-04-2001",
+        "Nacimiento": "10-02-1979",
+        "Vencimiento": "06-07-2026",
+        "TipoSanger": "O+",
+        "Nombre": "S\u00e1nchez Fuentes Carlos",
+        "Codigo": "428088666"
+    },
+    {
+        "Numero": "DM - 504435747",
+        "Expedicion": "22-11-2020",
+        "Nacimiento": "12-05-1999",
+        "Vencimiento": "27-03-2026",
+        "TipoSanger": "A+",
+        "Nombre": "Vargas Fuentes Silvia",
+        "Codigo": "946359231"
+    },
+    {
+        "Numero": "DM - 655837181",
+        "Expedicion": "09-04-2020",
+        "Nacimiento": "28-11-1976",
+        "Vencimiento": "15-02-2026",
+        "TipoSanger": "B-",
+        "Nombre": "Herrera Vargas Miguel",
+        "Codigo": "221368698"
+    },
+    {
+        "Numero": "DM - 191332076",
+        "Expedicion": "07-04-2009",
+        "Nacimiento": "14-04-1957",
+        "Vencimiento": "19-06-2027",
+        "TipoSanger": "A-",
+        "Nombre": "Morales L\u00f3pez Laura",
+        "Codigo": "731855383"
+    },
+    {
+        "Numero": "DM - 608521174",
+        "Expedicion": "26-10-2006",
+        "Nacimiento": "21-07-1957",
+        "Vencimiento": "25-01-2024",
+        "TipoSanger": "O-",
+        "Nombre": "Herrera Vargas Isabel",
+        "Codigo": "395163621"
+    }
+]
+
+# Insertar los datos en la colección
+result = collection.insert_many(datos)
+print("Datos insertados:", result.inserted_ids)
+
+# Cerrar la conexión
+client.close()
