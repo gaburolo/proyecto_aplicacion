@@ -10,11 +10,10 @@ modelo_directorio = 'model/modelo_documentos/1'
 
 # Carga el modelo
 loaded_model = tf.keras.models.load_model(modelo_directorio)
-print(tf.__version__)
 
-def categorizar(url):
-  respuesta = requests.get(url)
-  img = Image.open(BytesIO(respuesta.content))
+def categorize(url):
+  result = requests.get(url)
+  img = Image.open(BytesIO(result.content))
   img = np.array(img).astype(float)/255
 
   img = cv2.resize(img, (224,224))
@@ -29,7 +28,9 @@ def categorizar(url):
     return "cedula"
   elif value == 2:
     return "licencia"
-def categorizar_local(url):
+  
+
+def categorize_local(url):
   img = Image.open(url)
   img = np.array(img).astype(float)/255
 

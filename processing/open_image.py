@@ -62,7 +62,7 @@ class ImageEnhancer:
             # Save the processed image
             cv2.imwrite(output_path, self.image)
 
-            print(f"Enhanced image saved at {output_path}")
+            #print(f"Enhanced image saved at {output_path}")
 
     def display_image(self):
         if self.image is not None:
@@ -71,13 +71,13 @@ class ImageEnhancer:
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-    def process(self):
+    def process(self, typeDoc):
         if self.load_image():
             self.resize()
-            self.apply_sharpening_filter()
-            self.adjust_gamma()
-            self.smooth()
-            
+            if typeDoc != "licencia":
+                self.apply_sharpening_filter()
+                self.adjust_gamma()
+                self.smooth()   
             self.save_enhanced_image()
 
     def display_concatenated_image(self, enhanced_image):
