@@ -6,11 +6,11 @@ if __name__ == "__main__":
     validate(path)
     path = "photo/carnet.jpeg"
     print("Documento 1:")
-    validate(path)
+    #validate(path)
     
     path = "photo/licencia.png"
     print("Documento 1:")
-    validate(path)
+    #validate(path)
     
     
     
