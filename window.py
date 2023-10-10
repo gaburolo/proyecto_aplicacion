@@ -6,7 +6,7 @@ from processing.get_doc_type import *
 from validation.data_compare import *
 from validation.validation import *
 
-path = "photo/image.jpeg"
+path = "photo/image.png"
 
 initial_path = "utils/initial.png"
 initial_image1 = Image.open(initial_path)

@@ -1,10 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
-import scripts.generator_data as gn
+import generator_data as gn
 
 
 def create_image(index):
     # Ruta de la imagen de fondo en la que deseas escribir
-    imagen_de_fondo = "dataset\Costa Rica\carnet.png"
+    imagen_de_fondo = "../dataset\Costa Rica\carnet.png"
 
     # Abre la imagen de fondo
     imagen = Image.open(imagen_de_fondo)
@@ -39,7 +39,7 @@ def create_image(index):
 
     draw.text((840, 600), fecha, fill=color_texto, font=fuente_fecha)
     # Guarda la imagen con las frases escritas
-    imagen_guardada = "salida/carnet/TEC"+str(index)+".png"
+    imagen_guardada = "../salida/carnet/TEC"+str(index)+".png"
     imagen.save(imagen_guardada)
 
     # Cierra la imagen

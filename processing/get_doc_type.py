@@ -31,7 +31,13 @@ def categorize(url):
   
 
 def categorize_local(url):
-  img = Image.open(url)
+
+
+  image_png = cv2.imread(url, cv2.IMREAD_UNCHANGED)
+
+
+  cv2.imwrite('photo/output.jpg', image_png, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
+  img = Image.open('photo/output.jpg')
   img = np.array(img).astype(float)/255
 
   img = cv2.resize(img, (224,224))

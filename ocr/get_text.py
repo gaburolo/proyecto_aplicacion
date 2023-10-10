@@ -2,10 +2,30 @@ import pytesseract
 import cv2
 import os
 import numpy as np
+from PIL import Image
+import re
+
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
+def clean_text(text):
+    # Utilizar una expresión regular para mantener letras mayúsculas, minúsculas y espacios
+    cleaned_text = re.sub(r'[^A-Za-z\sÁÉÍÓÚáéíóú]', '', text)
+    return cleaned_text
+
+def clean_number(text):
+    # Utilizar una expresión regular para mantener solo números y espacios
+    cleaned_text = re.sub(r'[^0-9\s]', '', text)
+    return cleaned_text
+
 def get_text_img_identity(image_path):
-    image = cv2.imread(image_path)
+    #image = cv2.imread(image_path)
+    img = np.array(Image.open(image_path))
+
+
+    norm_img = np.zeros((img.shape[0], img.shape[1]))
+    image = cv2.normalize(img, norm_img, 0, 255, cv2.NORM_MINMAX)
+    image = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)[1]
+    image = cv2.GaussianBlur(img, (1, 1), 0)
 
     #(X,Y, Width, Height)
     roi_number = (455, 185, 365, 70)
@@ -20,8 +40,23 @@ def get_text_img_identity(image_path):
     text_lastname = pytesseract.image_to_string(lastname_section, lang='spa')
     text_number = pytesseract.image_to_string(number_section, lang='spa')
 
-    lastname_lines = text_lastname.split("\n")
+
+    """
+        carpeta_parts = 'parts'
+        if not os.path.exists(carpeta_parts):
+            os.makedirs(carpeta_parts)
+
+        # Guardar las regiones recortadas en archivos individuales
+        ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
+        cv2.imwrite(ruta_apellido_recortado, lastname_section)
+    """
+
+
+    lastname_lines = clean_text(text_lastname)
+    lastname_lines = lastname_lines.split("\n")
+    text_name = clean_text(text_name)
     text_name = text_name.split("\n")
+    text_number = clean_number(text_number)
     text_number = text_number.split("\n")
 
     data = {
@@ -34,7 +69,14 @@ def get_text_img_identity(image_path):
     return data
 
 def get_text_img_stundent(image_path):
-    image = cv2.imread(image_path)
+    #image = cv2.imread(image_path)
+    img = np.array(Image.open(image_path))
+
+
+    norm_img = np.zeros((img.shape[0], img.shape[1]))
+    image = cv2.normalize(img, norm_img, 0, 255, cv2.NORM_MINMAX)
+    image = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)[1]
+    image = cv2.GaussianBlur(img, (1, 1), 0)
 
     #(X,Y, Width, Height)
     roi_data = (1015, 724, 145, 55)
@@ -61,14 +103,15 @@ def get_text_img_stundent(image_path):
 
     return data
 
-def get_text_img_license(path_image):
-    image = cv2.imread(path_image)
+def get_text_img_license(image_path):
+    image = cv2.imread(image_path)
+    
 
     #(X,Y, Ancho, Alto)
     roi_number = (370, 150, 360, 50)
     roi_expedition = (500, 205, 220, 50)
     roi_birth = (500, 256, 220, 50)
-    roi_expiration = (500, 305, 220, 50)
+    roi_expiration = (500, 305, 210, 50)
     roi_blood_type = (665, 360, 145, 60)
     roi_type = (950, 230, 100, 60)
     roi_name = (20, 410, 500, 60)
@@ -103,7 +146,7 @@ def get_text_img_license(path_image):
     text_type = text_type.split("\n")
     text_name = text_name.split("\n")
     text_code = text_code.split(" ")
-    """
+    
 
     carpeta_parts = 'parts'
     if not os.path.exists(carpeta_parts):
@@ -113,8 +156,8 @@ def get_text_img_license(path_image):
     ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
 
 
-    cv2.imwrite(ruta_apellido_recortado, section_number)
-    
+    cv2.imwrite(ruta_apellido_recortado, section_expiration)
+    """
     print("number: " + text_number)
     print("expedition: " + text_expedition)
     print("birth: " + text_birth)
