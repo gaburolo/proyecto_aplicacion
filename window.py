@@ -5,8 +5,8 @@ from PIL import Image, ImageTk
 from processing.get_doc_type import *
 from validation.data_compare import *
 from validation.validation import *
-
-path = "photo/image.png"
+from client.client import *
+path = "client/photo.png"
 
 initial_path = "utils/initial.png"
 initial_image1 = Image.open(initial_path)
@@ -15,7 +15,7 @@ data_container = None
 # Función para manejar el evento del botón y actualizar los datos
 def update_data():
     clear_screen()
-    
+    #requestPhoto()
     type_doc = categorize_local(path)
     new_path = processing(path, type_doc)
     data_labels, should_show  = validate(new_path, type_doc)
@@ -40,7 +40,7 @@ def show_images():
     global image1, image2
     image1 = Image.open(path)
     width, height = image1.size
-    image1 = image1.resize((width // 2, height // 2))
+    image1 = image1.resize((width // 3, height // 3))
     photo1 = ImageTk.PhotoImage(image1)
     image_label1.config(image = photo1)
     image_label1.image = photo1  # Actualizar referencia de la imagen
@@ -48,7 +48,7 @@ def show_images():
     new_image_path = "processed_photos\enhanced_image.png"
     image2 = Image.open(new_image_path)
     width, height = image2.size
-    image2 = image2.resize((width // 2, height // 2))
+    image2 = image2.resize((width // 3, height // 3))
     photo2 = ImageTk.PhotoImage(image2)
     image_label2.config(image = photo2)
     image_label2.image = photo2  # Actualizar referencia de la imagen

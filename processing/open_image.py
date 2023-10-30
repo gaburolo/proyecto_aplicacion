@@ -74,7 +74,7 @@ class ImageEnhancer:
     def process(self, typeDoc):
         if self.load_image():
             self.resize()
-            if typeDoc != "licencia":
+            if typeDoc != "licencia1":
                 self.apply_sharpening_filter()
                 self.adjust_gamma()
                 self.smooth()   
