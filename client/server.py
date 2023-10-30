@@ -46,4 +46,3 @@ while True:
         print(f"Error de conexión con el cliente: {e}")
     finally:
         client_socket.close()
-
