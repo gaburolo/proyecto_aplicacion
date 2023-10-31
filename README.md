@@ -3,11 +3,11 @@
 
 ## Sistema identificador de validez de diferentes documentos de identidad.
 
-> Rama: master
+### Rama: master
 
-pip install Pillow
-pip install opencv-python
-pip install pytesseract
-pip install python-dotenv
-pip install tensorflow
-pip install pymongo
+> pip install Pillow
+> pip install opencv-python
+> pip install pytesseract
+> pip install python-dotenv
+> pip install tensorflow
+> pip install pymongo

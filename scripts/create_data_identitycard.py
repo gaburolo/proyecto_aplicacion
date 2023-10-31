@@ -1,10 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
-import scripts.generator_data as gn
+import generator_data as gn
 
 
 def create_image(index):
     # Ruta de la imagen de fondo en la que deseas escribir
-    imagen_de_fondo = "dataset\Costa Rica\original.jpg"
+    imagen_de_fondo = "..\dataset\Costa Rica\original.jpg"
 
     # Abre la imagen de fondo
     imagen = Image.open(imagen_de_fondo)
@@ -18,19 +18,19 @@ def create_image(index):
     numero = gn.generar_numero()
     # Coordenadas y texto que deseas escribir en la imagen
     coordenadas_y_texto = [
-        ((342, 533), nombre),
-        ((342, 563), apellido1),
-        ((342, 593), apellido2),
+        ((447, 640), nombre),
+        ((447, 683), apellido1),
+        ((447, 724), apellido2),
     ]
 
     coordenadas_firma = [
-        ((280, 460), nombre+ " " + apellido1 + " " + apellido2),
+        ((340, 510), nombre+ " " + apellido1 + " " + apellido2),
     ]
     coordenadas_numero = [
-        ((360, 170), numero),
+        ((458, 188), numero),
     ]
     # Fuente y tamaño del texto
-    fuente = ImageFont.truetype("arialbd.ttf", 28)
+    fuente = ImageFont.truetype("arialbd.ttf", 30)
     fuente_firma = ImageFont.truetype("LHANDW.TTF", 36)
     fuente_numero = ImageFont.truetype("arialbd.ttf", 36)
     # Color del texto (en este caso, blanco)
@@ -48,7 +48,7 @@ def create_image(index):
     for (x, y), texto in coordenadas_numero:
         draw.text((x, y), texto, fill=color_texto, font=fuente_numero)
     # Guarda la imagen con las frases escritas
-    imagen_guardada = "salida/cedula/CR"+str(index)+".png"
+    imagen_guardada = "../salida/cedula/CR"+str(index)+".png"
     imagen.save(imagen_guardada)
 
     # Cierra la imagen
