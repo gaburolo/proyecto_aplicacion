@@ -20,10 +20,16 @@ def clean_number(text):
     cleaned_text = re.sub(r'[^0-9\s]', '', text)
     return cleaned_text
 
+def clean_invalid_characters(text):
+    # Utilizar una expresión regular para mantener letras mayúsculas, minúsculas, espacios y números
+    cleaned_text = re.sub(r'[^A-Za-z0-9\sÁÉÍÓÚáéíóú]', '', text)
+    return cleaned_text
+
 def change_color(section):
     section = cv2.cvtColor(section, cv2.COLOR_BGR2GRAY)
     section = cv2.GaussianBlur(section, (1, 1), 0)
     return section
+
 def get_text_img_identity(image_path):
     #image = cv2.imread(image_path)
     img = np.array(Image.open(image_path))
@@ -124,10 +130,10 @@ def get_text_img_license(image_path):
     roi_birth = (856, 450, 334, 60)
     #roi_expiration = (500, 305, 210, 50)
     roi_expiration = (856, 515, 334, 70)
-    roi_blood_type = (665, 360, 145, 60)
-    roi_type = (950, 230, 100, 60)
-    roi_name = (20, 410, 500, 60)
-    roi_code = (870, 560, 240, 60)
+    roi_blood_type = (1095, 600, 125, 70)
+    roi_type = (1533, 400, 125, 75)
+    roi_name = (132, 680, 1313, 100)
+    roi_code = (1460, 905, 200, 53)
 
 
     section_number = image[roi_number[1]:roi_number[1]+roi_number[3], roi_number[0]:roi_number[0]+roi_number[2]]
@@ -148,23 +154,23 @@ def get_text_img_license(image_path):
     text_expedition = pytesseract.image_to_string(section_expedition, config=r'--psm 8 digits')
     text_birth = pytesseract.image_to_string(section_birth, config=r'--psm 8 digits')
     text_expiration = pytesseract.image_to_string(section_expiration, config=r'--oem 1 --psm 8 digits', )
-    text_blood_type = pytesseract.image_to_string(section_blood_type, lang='spa')
-    text_type = pytesseract.image_to_string(section_type, lang='spa')
-    text_name = pytesseract.image_to_string(section_name, lang='spa')
-    text_code = pytesseract.image_to_string(section_code, lang='spa')
-
+    text_blood_type = pytesseract.image_to_string(section_blood_type, lang='spa', config=r'--oem 1 --psm 8')
+    text_type = pytesseract.image_to_string(section_type, lang='spa', config=r'--oem 1 --psm 8')
+    
+    text_name = pytesseract.image_to_string(section_name, lang='spa', config=r'--oem 1 --psm 8')
+    text_code = pytesseract.image_to_string(section_code, lang='spa', config=r'--oem 1 --psm 8 digits')
    
     text_number = text_number.replace('L', 'I')
     text_number = text_number.split(".")
     text_expedition = text_expedition.split(".")
     text_birth = text_birth.split("\n")
     text_expiration = text_expiration.split("\n")
-    text_blood_type = text_blood_type.split("\n")
+    text_blood_type = text_blood_type.split(".")
+    text_type = clean_invalid_characters(text_type)
     text_type = text_type.split("\n")
-    text_name = text_name.split("\n")
-    text_code = text_code.split(" ")
+    text_name = text_name.split(".")
+    text_code = text_code.split("\n")
     
-
     carpeta_parts = 'parts'
     if not os.path.exists(carpeta_parts):
         os.makedirs(carpeta_parts)
@@ -172,19 +178,8 @@ def get_text_img_license(image_path):
     # Guardar las regiones recortadas en archivos individuales
     ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
 
-
-    cv2.imwrite(ruta_apellido_recortado, section_expiration)
-    """
-    print("number: " + text_number)
-    print("expedition: " + text_expedition)
-    print("birth: " + text_birth)
-    print("expiration: " + text_expiration)
-    print("blood_type: " + text_blood_type)
-    print("type: " + text_type)
-    print("name: " + text_name)
-    print("code: " + text_code)"""
-    
-
+    cv2.imwrite(ruta_apellido_recortado, section_name)
+   
     data = {
         "number": text_number[0],
         "expedition": text_expedition[0],
