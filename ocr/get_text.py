@@ -30,6 +30,10 @@ def change_color(section):
     section = cv2.GaussianBlur(section, (1, 1), 0)
     return section
 
+def clean_bad_space(text_list):
+    new_list = [elemento for elemento in text_list if elemento != '']
+    return new_list
+
 def get_text_img_identity(image_path):
     #image = cv2.imread(image_path)
     img = np.array(Image.open(image_path))
@@ -41,43 +45,52 @@ def get_text_img_identity(image_path):
     image = cv2.GaussianBlur(img, (1, 1), 0)
 
     #(X,Y, Width, Height)
-    roi_number = (455, 185, 365, 70)
-    roi_name = (430, 625, 445, 60)
-    roi_lastname = (430, 680, 300, 100)
+    roi_number = (670, 265, 490, 110)
+    roi_name = (680, 820, 600, 75)
+    roi_lastname = (675, 890, 420, 110)
 
     number_section = image[roi_number[1]:roi_number[1]+roi_number[3], roi_number[0]:roi_number[0]+roi_number[2]]
     name_section = image[roi_name[1]:roi_name[1]+roi_name[3], roi_name[0]:roi_name[0]+roi_name[2]]
     lastname_section = image[roi_lastname[1]:roi_lastname[1]+roi_lastname[3], roi_lastname[0]:roi_lastname[0]+roi_lastname[2]]
 
-    text_name = pytesseract.image_to_string(name_section, lang='spa')
-    text_lastname = pytesseract.image_to_string(lastname_section, lang='spa')
-    text_number = pytesseract.image_to_string(number_section, lang='spa')
-
-
-    """
-        carpeta_parts = 'parts'
-        if not os.path.exists(carpeta_parts):
-            os.makedirs(carpeta_parts)
-
-        # Guardar las regiones recortadas en archivos individuales
-        ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
-        cv2.imwrite(ruta_apellido_recortado, lastname_section)
-    """
-
+    text_name = pytesseract.image_to_string(name_section, lang='spa', config=r'--oem 1 --psm 8')
+    text_lastname = pytesseract.image_to_string(lastname_section, lang='spa', config=r'--oem 1 --psm 6')
+    text_number = pytesseract.image_to_string(number_section, config=r'--oem 1 --psm 7')
 
     lastname_lines = clean_text(text_lastname)
+
     lastname_lines = lastname_lines.split("\n")
+    lastname_lines = clean_bad_space(lastname_lines)
     text_name = clean_text(text_name)
-    text_name = text_name.split("\n")
+    text_name = re.split(r'[ \n]+', text_name)
+    text_name = clean_bad_space(text_name)
     text_number = clean_number(text_number)
     text_number = text_number.split("\n")
 
-    data = {
-        "name": text_name[0],
-        "lastname1": lastname_lines[0],
-        "lastname2": lastname_lines[1],
-        "id": text_number[0]
-    }
+    print(text_number)
+    print(lastname_lines)
+    print(text_name)
+    if len(lastname_lines) == 1:
+        data = {
+            "name": text_name[0]+ " " + text_name[1],
+            "lastname1": lastname_lines[0],
+            "lastname2": "",
+            "id": text_number[0]
+        }
+    elif len(text_name) == 1:
+        data = {
+            "name": text_name[0],
+            "lastname1": lastname_lines[0],
+            "lastname2": lastname_lines[1],
+            "id": text_number[0]
+        }
+    else:
+        data = {
+            "name": text_name[0]+ " " + text_name[1],
+            "lastname1": lastname_lines[0],
+            "lastname2": lastname_lines[1],
+            "id": text_number[0]
+        }
     
     return data
 
@@ -131,9 +144,9 @@ def get_text_img_license(image_path):
     #roi_expiration = (500, 305, 210, 50)
     roi_expiration = (856, 515, 334, 70)
     roi_blood_type = (1095, 600, 125, 70)
-    roi_type = (1533, 400, 125, 75)
+    roi_type = (1533, 400, 125, 82)
     roi_name = (132, 680, 1313, 100)
-    roi_code = (1460, 905, 200, 53)
+    roi_code = (1460, 905, 200, 56)
 
 
     section_number = image[roi_number[1]:roi_number[1]+roi_number[3], roi_number[0]:roi_number[0]+roi_number[2]]
@@ -161,14 +174,14 @@ def get_text_img_license(image_path):
     text_code = pytesseract.image_to_string(section_code, lang='spa', config=r'--oem 1 --psm 8 digits')
    
     text_number = text_number.replace('L', 'I')
-    text_number = text_number.split(".")
-    text_expedition = text_expedition.split(".")
+    text_number = re.split(r'[ \n"]+', text_number)
+    text_expedition =re.split(r'[ \n"]+', text_expedition)
     text_birth = text_birth.split("\n")
-    text_expiration = text_expiration.split("\n")
+    text_expiration = re.split(r'[ \n"]+', text_expiration)
     text_blood_type = text_blood_type.split(".")
     text_type = clean_invalid_characters(text_type)
     text_type = text_type.split("\n")
-    text_name = text_name.split(".")
+    text_name = re.split(r'[\n".]+', text_name)
     text_code = text_code.split("\n")
     
     carpeta_parts = 'parts'
@@ -177,9 +190,9 @@ def get_text_img_license(image_path):
 
     # Guardar las regiones recortadas en archivos individuales
     ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
+    cv2.imwrite(ruta_apellido_recortado, section_expiration)
 
-    cv2.imwrite(ruta_apellido_recortado, section_name)
-   
+    
     data = {
         "number": text_number[0],
         "expedition": text_expedition[0],

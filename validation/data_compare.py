@@ -52,25 +52,17 @@ def license_compare(data):
                                 if data["type"] == result["tipo"]:
                                     return True
                                 else:
-                                    print(1)
                                     return False
                             else:
-                                print(2)
                                 return False
                         else:
-                            print(3)
                             return False
                     else:
-                        print(4)
                         return False
                 else:
-                    print(5)
                     return False               
             else:
-                print(6)
                 return False
         else:
-            print(7)
             return False
-    print(8)
     return False

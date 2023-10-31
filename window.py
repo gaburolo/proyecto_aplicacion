@@ -15,7 +15,7 @@ data_container = None
 # Función para manejar el evento del botón y actualizar los datos
 def update_data():
     clear_screen()
-    #requestPhoto()
+    requestPhoto()
     type_doc = categorize_local(path)
     new_path = processing(path, type_doc)
     data_labels, should_show  = validate(new_path, type_doc)
