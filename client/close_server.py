@@ -19,4 +19,3 @@ def closeServer():
 
     received_data = b''
     client_socket.close()
-closeServer()

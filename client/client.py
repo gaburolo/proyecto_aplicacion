@@ -26,9 +26,7 @@ def requestPhoto():
     # Convierte los bytes en una imagen y guárdala como "photo.png"
     if received_data:
         image = Image.open(io.BytesIO(received_data))
-        image.save("photo.png", "PNG")
+        image.save("client/photo.png", "PNG")
         print("Imagen guardada como photo.png")
 
     client_socket.close()
-
-requestPhoto()
