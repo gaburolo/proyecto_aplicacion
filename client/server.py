@@ -25,7 +25,7 @@ while True:
         # Trabaja con los datos y responde al cliente
         if data == "take":
             print("hola")
-            photo = take_big_photo()
+            photo = take_photo()
             if photo is not None:
                 photo_bytes = cv2.imencode('.jpg', photo)[1].tobytes()
                 

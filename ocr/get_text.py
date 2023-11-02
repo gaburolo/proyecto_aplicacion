@@ -45,6 +45,7 @@ def get_text_img_identity(image_path):
     image = cv2.GaussianBlur(img, (1, 1), 0)
 
     #(X,Y, Width, Height)
+
     roi_number = (670, 265, 490, 110)
     roi_name = (680, 820, 600, 75)
     roi_lastname = (675, 890, 420, 110)
@@ -66,16 +67,21 @@ def get_text_img_identity(image_path):
     text_name = clean_bad_space(text_name)
     text_number = clean_number(text_number)
     text_number = text_number.split("\n")
+    carpeta_parts = 'parts'
+    if not os.path.exists(carpeta_parts):
+        os.makedirs(carpeta_parts)
 
-    print(text_number)
-    print(lastname_lines)
-    print(text_name)
-    if len(lastname_lines) == 1:
+    # Guardar las regiones recortadas en archivos individuales
+    ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
+    cv2.imwrite(ruta_apellido_recortado, lastname_section)
+
+
+    if len(lastname_lines) == 1 or len(lastname_lines) == 0:
         data = {
-            "name": text_name[0]+ " " + text_name[1],
-            "lastname1": lastname_lines[0],
-            "lastname2": "",
-            "id": text_number[0]
+            "name": "Error",
+            "lastname1": "Error",
+            "lastname2": "Error",
+            "id": "Error"
         }
     elif len(text_name) == 1:
         data = {
@@ -105,23 +111,24 @@ def get_text_img_stundent(image_path):
     image = cv2.GaussianBlur(img, (1, 1), 0)
 
     #(X,Y, Width, Height)
-    #roi_data = (1015, 724, 145, 55)
+    #For the litle image
     roi_data = (1400, 960, 230, 80)
-    #roi_number = (370, 620, 382, 80)
     roi_number = (560, 825, 540, 115)
-    #roi_name = (380, 500, 855, 60)
     roi_name = (560, 687, 1135, 68)
+
     data_section = image[roi_data[1]:roi_data[1]+roi_data[3], roi_data[0]:roi_data[0]+roi_data[2]]
     number_section = image[roi_number[1]:roi_number[1]+roi_number[3], roi_number[0]:roi_number[0]+roi_number[2]]
     name_section = image[roi_name[1]:roi_name[1]+roi_name[3], roi_name[0]:roi_name[0]+roi_name[2]]
 
-    text_name = pytesseract.image_to_string(name_section, lang='spa')
-    text_number = pytesseract.image_to_string(number_section, lang='spa')
-    text_data = pytesseract.image_to_string(data_section, lang='spa')
+    text_name = pytesseract.image_to_string(name_section, lang='spa', config=r'--oem 1 --psm 8')
+    text_number = pytesseract.image_to_string(number_section, lang='spa', config=r'--oem 1 --psm 8 digits')
+    text_data = pytesseract.image_to_string(data_section, lang='spa', config=r'--oem 1 --psm 8')
 
     text_name = text_name.split("\n")
     text_number = text_number.split("\n")
     text_data = text_data.split("\n")
+
+    
 
     data = {
         "name": text_name[0],
@@ -184,13 +191,7 @@ def get_text_img_license(image_path):
     text_name = re.split(r'[\n".]+', text_name)
     text_code = text_code.split("\n")
     
-    carpeta_parts = 'parts'
-    if not os.path.exists(carpeta_parts):
-        os.makedirs(carpeta_parts)
-
-    # Guardar las regiones recortadas en archivos individuales
-    ruta_apellido_recortado = os.path.join(carpeta_parts, 'apellido.png')
-    cv2.imwrite(ruta_apellido_recortado, section_expiration)
+    
 
     
     data = {

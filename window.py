@@ -6,6 +6,7 @@ from processing.get_doc_type import *
 from validation.data_compare import *
 from validation.validation import *
 from client.client import *
+
 path = "client/photo.png"
 
 initial_path = "utils/initial.png"
@@ -40,7 +41,7 @@ def show_images():
     global image1, image2
     image1 = Image.open(path)
     width, height = image1.size
-    image1 = image1.resize((width // 3, height // 3))
+    image1 = image1.resize((width // 4, height // 4))
     photo1 = ImageTk.PhotoImage(image1)
     image_label1.config(image = photo1)
     image_label1.image = photo1  # Actualizar referencia de la imagen
@@ -48,7 +49,7 @@ def show_images():
     new_image_path = "processed_photos\enhanced_image.png"
     image2 = Image.open(new_image_path)
     width, height = image2.size
-    image2 = image2.resize((width // 3, height // 3))
+    image2 = image2.resize((width // 4, height // 4))
     photo2 = ImageTk.PhotoImage(image2)
     image_label2.config(image = photo2)
     image_label2.image = photo2  # Actualizar referencia de la imagen
@@ -74,6 +75,9 @@ def clear_screen():
     if data_container:
         data_container.destroy()
 
+def closeApp():
+    closeServer()
+    root.quit()
 
 # Crear la ventana principal
 root = tk.Tk()
@@ -109,5 +113,8 @@ image_label2.grid(row=1, column=2, padx=10, pady=10, columnspan=2)
 
 validated_label = ttk.Label(root, text="", foreground="black", background="black")
 validated_label.grid(row=3, column=2, columnspan=2, padx=10, pady=5)
+
+button = ttk.Button(root, text="Cerrar", command=closeApp)
+button.grid(row=4, column=3, columnspan=2, padx=10, pady=10)
 # Iniciar el bucle principal de tkinter
 root.mainloop()

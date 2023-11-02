@@ -2,9 +2,9 @@ import requests
 import cv2
 import numpy as np
 
-url_big_photo = "http://192.168.1.111:8080/photo.jpg"
-url = "http://192.168.1.111:8080/video"
-#url = "http://192.168.100.130:8080/video"
+url_big_photo = "http://192.168.100.130:8080/photo.jpg"
+#url = "http://192.168.1.111:8080/video"
+url = "http://192.168.100.130:8080/video"
 
 def take_photo():
     cap = cv2.VideoCapture(url)
