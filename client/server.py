@@ -2,6 +2,9 @@ import socket
 import numpy as np
 import cv2
 from photo import *
+
+camera_ip = input("Por favor, ingrese la dirección IP de la cámara: ")
+
 # Configura el servidor
 host = '0.0.0.0'  # Escucha en todas las interfaces
 port = 12345  # Puerto para la conexión
@@ -24,8 +27,7 @@ while True:
     
         # Trabaja con los datos y responde al cliente
         if data == "take":
-            print("hola")
-            photo = take_photo()
+            photo = take_photo(camera_ip)
             if photo is not None:
                 photo_bytes = cv2.imencode('.jpg', photo)[1].tobytes()
                 

@@ -11,3 +11,9 @@
 > pip install python-dotenv
 > pip install tensorflow
 > pip install pymongo
+
+
+## Server
+
+> python3 -m venv .venv
+> source .venv/bin/active

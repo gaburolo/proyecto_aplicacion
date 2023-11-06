@@ -115,6 +115,6 @@ validated_label = ttk.Label(root, text="", foreground="black", background="black
 validated_label.grid(row=3, column=2, columnspan=2, padx=10, pady=5)
 
 button = ttk.Button(root, text="Cerrar", command=closeApp)
-button.grid(row=4, column=3, columnspan=2, padx=10, pady=10)
+button.grid(row=5, column=3, columnspan=2, padx=10, pady=10)
 # Iniciar el bucle principal de tkinter
 root.mainloop()

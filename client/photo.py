@@ -2,18 +2,13 @@ import requests
 import cv2
 import numpy as np
 
-url_big_photo = "http://192.168.100.130:8080/photo.jpg"
-#url = "http://192.168.1.111:8080/video"
-url = "http://192.168.100.130:8080/video"
-
-def take_photo():
+def take_photo(camera_ip):
+    url = f"http://{camera_ip}:8080/video"
     cap = cv2.VideoCapture(url)
-
 
     if not cap.isOpened():
         print("Error: No se pudo abrir la cámara.")
         exit()
-
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 4000)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 3000)
@@ -30,7 +25,8 @@ def take_photo():
 
     cv2.destroyAllWindows()
 
-def take_big_photo():
+def take_big_photo(camera_ip):
+    url_big_photo = f"http://{camera_ip}:8080/photo.jpg"
     response = requests.get(url_big_photo)
     if response.status_code == 200:
         image_data = np.frombuffer(response.content, np.uint8)
