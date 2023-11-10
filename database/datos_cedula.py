@@ -5,14 +5,12 @@ import os
 
 load_dotenv()
 uri = os.getenv("uri")
-# Conectar a la base de datos
+
 client = MongoClient(uri)
 db = client.get_database()
 
-# Seleccionar una colección
 collection = db["cedula"]
 
-# Datos a insertar
 datos = [
     {
         "nombre": "Ana",

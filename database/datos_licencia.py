@@ -5,16 +5,12 @@ import os
 
 load_dotenv()
 uri = os.getenv("uri")
-# Cadena de conexión a MongoDB Atlas
 
-# Conectar a la base de datos
 client = MongoClient(uri)
 db = client.get_database()
 
-# Seleccionar una colección
 collection = db["licencia"]
 
-# Datos a insertar
 datos = [
     {
         "numero": "DM-889330756",

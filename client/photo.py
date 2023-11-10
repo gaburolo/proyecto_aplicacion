@@ -3,6 +3,14 @@ import cv2
 import numpy as np
 
 def take_photo(camera_ip):
+    """
+    The `take_photo` function captures a photo from a camera with a given IP address and saves it as
+    "imagen.jpg".
+    
+    :param camera_ip: The `camera_ip` parameter is the IP address of the camera you want to capture the
+    photo from
+    :return: the captured frame as a numpy array.
+    """
     url = f"http://{camera_ip}:8080/video"
     cap = cv2.VideoCapture(url)
 
@@ -24,18 +32,3 @@ def take_photo(camera_ip):
     cap.release()
 
     cv2.destroyAllWindows()
-
-def take_big_photo(camera_ip):
-    url_big_photo = f"http://{camera_ip}:8080/photo.jpg"
-    response = requests.get(url_big_photo)
-    if response.status_code == 200:
-        image_data = np.frombuffer(response.content, np.uint8)
-        frame = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
-        if frame is not None:
-            cv2.imwrite("imagen_grande.jpg", frame)
-            print("Imagen guardada como imagen_grande.jpg")
-            return frame
-        else:
-            print("Error al decodificar la imagen.")
-    else:
-        print(f"Error al obtener la imagen. Código de estado: {response.status_code}")
