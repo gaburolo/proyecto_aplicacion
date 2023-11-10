@@ -1,13 +1,7 @@
 import socket
-import io
-import os
-from PIL import Image
-from dotenv import load_dotenv
 
-load_dotenv()
-
-host = os.getenv("host")
-port = os.getenv("port")
+host = input("Por favor, ingrese la dirección IP del servidor: ")
+port = input("Por favor, ingrese la puerto del servidor: ")
 
 def closeServer():
     """
