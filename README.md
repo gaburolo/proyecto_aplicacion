@@ -7,10 +7,15 @@
 
 ## APP
 > pip install Pillow
+
 > pip install opencv-python
+
 > pip install pytesseract
+
 > pip install python-dotenv
+
 > pip install tensorflow
+
 > pip install pymongo
 
 ### Create .env
@@ -30,8 +35,11 @@ python .\windows.py
 ## Server
 
 > python3 -m venv .venv
+
 > source .venv/bin/active
+
 > pip3 install opencv-python
+
 > pip3 install requests
 
 How to run:
