@@ -1,9 +1,9 @@
-# Proyecto de Aplicacion de Ingenieria en Computadores
+# Computer Engineering Application Project
 
 
-## Sistema identificador de validez de diferentes documentos de identidad.
+## Validity identifier system for different identity documents.
 
-### Rama: master
+### Branch : Main
 
 ## APP
 > pip install Pillow
