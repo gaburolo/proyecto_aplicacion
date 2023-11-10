@@ -2,16 +2,19 @@ import socket
 import numpy as np
 import cv2
 from photo import *
-# Configura el servidor
-host = '0.0.0.0'  # Escucha en todas las interfaces
-port = 12345  # Puerto para la conexión
+
+camera_ip = input("Por favor, ingrese la dirección IP de la cámara: ")
+host = '0.0.0.0'  
+port = 12345  
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind((host, port))
-server_socket.listen(1)  # Escuchar una conexión entrante
+server_socket.listen(1) 
 
 print(f"Esperando una conexión en {host}:{port}")
 
+# This code snippet is the main loop of a server program that listens for incoming connections from
+# clients.
 while True:
     client_socket, addr = server_socket.accept()
     print(f"Conexión establecida desde {addr}")
@@ -24,8 +27,7 @@ while True:
     
         # Trabaja con los datos y responde al cliente
         if data == "take":
-            print("hola")
-            photo = take_big_photo()
+            photo = take_photo(camera_ip)
             if photo is not None:
                 photo_bytes = cv2.imencode('.jpg', photo)[1].tobytes()
                 
